@@ -38,12 +38,14 @@ class TruckListView(View):
             ).extra()
         else:
             trucks_list = Truck.objects.all()
-
+        trucks_list_annotate = trucks_list.annotate(
+            overweight=F('current_weight') * 100 / F('truck_type__carrying')
+        )
         return render(
             request,
             'trucks_load/trucks_list.html',
             {
                 'trucks_form': trucks_form,
-                'trucks_list': trucks_list
+                'trucks_list': trucks_list_annotate
             }
         )
