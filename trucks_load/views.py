@@ -15,7 +15,7 @@ class TruckListView(View):
     def get(request):
         trucks_form = TruckTypeForm()
         trucks_list = Truck.objects.annotate(
-            overweight=F('current_weight') * 100 / F('truck_type__carrying')
+            overweight=100 - F('current_weight') * 100 / F('truck_type__carrying')
         )
 
         return render(
@@ -39,7 +39,7 @@ class TruckListView(View):
         else:
             trucks_list = Truck.objects.all()
         trucks_list_annotate = trucks_list.annotate(
-            overweight=F('current_weight') * 100 / F('truck_type__carrying')
+            overweight=100 - F('current_weight') * 100 / F('truck_type__carrying')
         )
         return render(
             request,
