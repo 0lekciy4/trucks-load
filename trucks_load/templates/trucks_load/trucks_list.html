@@ -1,0 +1,31 @@
+{% extends 'trucks_load/_base.html' %}
+{% block content %}
+    <form method="post" class="form-inline">
+            {% csrf_token %}
+            {{ trucks_form.as_table }}
+            <button type="submit" >Submit</button>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Бортовой номер</th>
+                <th scope="col">Модель</th>
+                <th scope="col">Макс. грузоподъемность</th>
+                <th scope="col">Текущий вес</th>
+                <th scope="col">Перегруз %</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for truck in trucks_list %}
+            <tr>
+                <td>{{ truck.board_number }}</td>
+                <th scope="row">{{ truck.truck_type.title }}</th>
+                <td>{{ truck.truck_type.carrying }}</td>
+                <td>{{ truck.current_weight }}</td>
+                <td>{{ truck.overweight }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
